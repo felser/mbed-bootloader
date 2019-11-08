@@ -12,6 +12,7 @@
                  "filesystem",
                  "filesystemstore",
                  "littlefs",
+                 "spif-driver",
                  "spif",
                  "qspif",
                  "sd",
@@ -77,10 +78,6 @@
             "update-client.storage-locations"          : 1,
             "update-client.firmware-header-version"    : "2",
             "target.restrict_size"                     : "0x8000",
-            "target.components_add"                    : ["SD"],
-            "sd.CRC_ENABLED"                           : 0,
-            "storage.storage_type"                     : "FILESYSTEM",
-            "storage_filesystem.internal_base_address" : "(MBED_ROM_START + MBED_BOOTLOADER_SIZE)",
             "update-client.application-details"        : "(MBED_CONF_STORAGE_FILESYSTEM_INTERNAL_BASE_ADDRESS + MBED_CONF_STORAGE_FILESYSTEM_RBP_INTERNAL_SIZE)",
             "mbed-bootloader.application-start-address": "(MBED_CONF_UPDATE_CLIENT_APPLICATION_DETAILS + MBED_BOOTLOADER_ACTIVE_HEADER_REGION_SIZE)",
             "target.extra_labels_remove"               : [ "WICED", "CORDIO", "PSA", "MBED_SPM" ]
@@ -161,6 +158,38 @@
             "target.features_remove"                   : ["CRYPTOCELL310"],
             "target.macros_remove"                     : ["MBEDTLS_CONFIG_HW_SUPPORT"],
             "target.macros_add"                        : ["NRFX_RNG_ENABLED=1", "RNG_ENABLED=1", "NRF_QUEUE_ENABLED=1"]
-        }
+        },
+        "MTS_DRAGONFLY_F413RH": {
+            "target.components_add"                        : ["SPIF"],
+            "update-client.storage-address"                : "(1024*1024*1)",
+            "update-client.storage-size"                   : "(1024*1024*1)",
+            "update-client.storage-locations"              : 1,
+            "update-client.storage-page"                   : 1,
+            "mbed-bootloader.bootloader-size"              : "(32*1024)",
+            "storage.storage_type"                         : "TDB_INTERNAL",
+            "storage_tdb_internal.internal_base_address"   : "(MBED_ROM_START + 32*1024)",
+            "storage_tdb_internal.internal_size"           : "(2*16*1024)",
+            "update-client.application-details"            : "(MBED_CONF_STORAGE_TDB_INTERNAL_INTERNAL_BASE_ADDRESS + MBED_CONF_STORAGE_TDB_INTERNAL_INTERNAL_SIZE)",
+            "mbed-bootloader.default-max-application-size" : "(MBED_ROM_START + MBED_ROM_SIZE - MBED_CONF_MBED_BOOTLOADER_APPLICATION_START_ADDRESS)",
+            "target.device_has_remove"                     : [
+                                                              "SERIAL_ASYNCH",
+                                                              "SERIAL_FC",
+                                                              "PORTOUT",
+                                                              "PORTINOUT",
+                                                              "RTC",
+                                                              "I2C_ASYNCH",
+                                                              "I2CSLAVE",
+                                                              "SPI_ASYNCH",
+                                                              "STDIO_MESSAGES",
+                                                              "LPTICKER",
+                                                              "CRC",
+                                                              "PORTIN",
+                                                              "PWMOUT",
+                                                              "ANALOGIN",
+                                                              "ANALOGOUT",
+                                                              "I2C"
+                                                             ],
+            "target.OUTPUT_EXT"                            : "bin"
+        }        
     }
 }
